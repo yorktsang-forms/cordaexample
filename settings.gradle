@@ -1,0 +1,2 @@
+rootProject.name = 'cordaexample'
+include 'iou-cordapp'
