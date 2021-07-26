@@ -1,8 +1,9 @@
-package io.cryptoblk.sample.state
+package com.formssihk.sample.state
 
 
-import io.cryptoblk.sample.contract.IOUContract
-import io.cryptoblk.sample.schema.IOUSchemaV1
+import com.formssihk.sample.contract.IOUContract
+import com.formssihk.sample.schema.IOUSchemaV1
+import com.sun.xml.internal.ws.wsdl.writer.document.Part
 import net.corda.core.contracts.BelongsToContract
 import net.corda.core.contracts.ContractState
 import net.corda.core.contracts.LinearState
@@ -24,20 +25,21 @@ import net.corda.core.schemas.QueryableState
  */
 @BelongsToContract(IOUContract::class)
 data class IOUState(val value: Int,
-                    val lender: Party,
-                    val borrower: Party,
+                    val creator: Party,
+                    val parties: List<Party> = listOf(creator),
                     val remark: String? = "",
+                    val listOfString: List<String> = emptyList(),
                     override val linearId: UniqueIdentifier = UniqueIdentifier()):
         LinearState, QueryableState {
     /** The public keys of the involved parties. */
-    override val participants: List<AbstractParty> get() = listOf(lender, borrower)
+    override val participants: List<Party> get() = parties
 
     override fun generateMappedObject(schema: MappedSchema): PersistentState {
         return when (schema) {
             is IOUSchemaV1 -> IOUSchemaV1.PersistentIOU(
-                    this.lender.name.toString(),
-                    this.borrower.name.toString(),
+                    this.creator.name.toString(),
                     this.value,
+                    // emptyList(),
                     this.linearId.id
             )
             else -> throw IllegalArgumentException("Unrecognised schema $schema")

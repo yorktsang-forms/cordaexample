@@ -1,4 +1,4 @@
-package io.cryptoblk.sample.schema
+package com.formssihk.sample.schema
 
 import net.corda.core.schemas.MappedSchema
 import net.corda.core.schemas.PersistentState
@@ -8,6 +8,7 @@ import javax.persistence.Entity
 import javax.persistence.Table
 //4.6 changes
 import org.hibernate.annotations.Type
+import javax.persistence.ElementCollection
 
 
 /**
@@ -29,20 +30,20 @@ object IOUSchemaV1 : MappedSchema(
     @Entity
     @Table(name = "iou_states")
     class PersistentIOU(
-            @Column(name = "lender")
-            var lenderName: String,
-
-            @Column(name = "borrower")
-            var borrowerName: String,
+            @Column(name = "creator")
+            var creator: String,
 
             @Column(name = "value")
             var value: Int,
+
+            // @ElementCollection
+            // var listOfString: List<String>,
 
             @Column(name = "linear_id")
             @Type(type = "uuid-char")
             var linearId: UUID
     ) : PersistentState() {
         // Default constructor required by hibernate.
-        constructor(): this("", "", 0, UUID.randomUUID())
+        constructor(): this("", 0, UUID.randomUUID())
     }
 }
