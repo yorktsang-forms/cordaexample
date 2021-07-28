@@ -13,6 +13,7 @@ import net.corda.core.identity.Party
 import net.corda.core.schemas.MappedSchema
 import net.corda.core.schemas.PersistentState
 import net.corda.core.schemas.QueryableState
+import java.time.Instant
 
 /**
  * The state object recording IOU agreements between two parties.
@@ -24,11 +25,11 @@ import net.corda.core.schemas.QueryableState
  * @param borrower the party receiving and approving the IOU.
  */
 @BelongsToContract(IOUContract::class)
-data class IOUState(val value: Int,
-                    val creator: Party,
-                    val parties: List<Party> = listOf(creator),
-                    val remark: String? = "",
-                    val listOfString: List<String> = emptyList(),
+data class IOUState( val userPublicKey: String = "",
+                    val loadRecords: Map<String, Instant> = emptyMap(),
+                    val creationTime: Instant = Instant.now(),
+                    val lastModifiedTime: Instant = Instant.now(),
+                    val parties: List<Party> = emptyList(),
                     override val linearId: UniqueIdentifier = UniqueIdentifier()):
         LinearState, QueryableState {
     /** The public keys of the involved parties. */
@@ -37,11 +38,9 @@ data class IOUState(val value: Int,
     override fun generateMappedObject(schema: MappedSchema): PersistentState {
         return when (schema) {
             is IOUSchemaV1 -> IOUSchemaV1.PersistentIOU(
-                    this.creator.name.toString(),
-                    this.value,
-                    // emptyList(),
-                    this.linearId.id
-            )
+                    userPublicKey,
+                    linearId.id
+                )
             else -> throw IllegalArgumentException("Unrecognised schema $schema")
         }
     }

@@ -9,18 +9,21 @@ import net.corda.core.flows.StartableByRPC
 import net.corda.core.transactions.SignedTransaction
 import net.corda.core.utilities.loggerFor
 import org.slf4j.Logger
+import java.time.Instant
 
 @StartableByRPC
-class CreateFlow(val value: Int, val remarks: String) : IOUFlow(){
+class CreateFlow(val userPublicKey: String, val creationTime: Instant, val loanRecords: Map<String, Instant>) : IOUFlow(){
     override val log: Logger = loggerFor<CreateFlow>()
     override  val command = IOUContract.Commands.Create()
 
     @Suspendable
     override fun call(): SignedTransaction {
-        val newState = IOUState(value,
-            serviceHub.myIdentity(),
-            serviceHub.allParties(),
-            remarks
+        val newState = IOUState(
+            userPublicKey = userPublicKey,
+            loadRecords = loanRecords,
+            creationTime = creationTime,
+            lastModifiedTime = Instant.now(),
+            parties = serviceHub.allParties()
         )
 
         return defaultFlow(newState,null)

@@ -8,6 +8,7 @@ import net.corda.core.utilities.loggerFor
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.time.Instant
 import kotlin.test.assertEquals
 
 class CreateFlowTest {
@@ -27,7 +28,7 @@ class CreateFlowTest {
 
     @Test
     fun createFlow() {
-        runFlow(tn, tn.partyA.startFlow(CreateFlow(10,"asd")))
+        runFlow(tn, tn.partyA.startFlow(CreateFlow("asdasd", Instant.now(), mapOf("row1" to Instant.now()))))
         val result = tn.partyA.transaction { tn.partyA.services.vaultService.queryBy(IOUState::class.java, QueryCriteria.VaultQueryCriteria()).states }
         assertEquals( 1, result.size)
 

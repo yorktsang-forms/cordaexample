@@ -11,6 +11,8 @@ import net.corda.core.contracts.StateAndRef
 import net.corda.core.contracts.StateRef
 import net.corda.core.crypto.SecureHash
 import org.springframework.boot.jackson.JsonComponent
+import org.springframework.core.convert.converter.Converter
+import org.springframework.stereotype.Component
 
 @JsonComponent
 class StateAndRefSerializer<T: ContractState>: JsonSerializer<StateAndRef<T>>() {
@@ -51,7 +53,7 @@ class StateRefSerializer: JsonSerializer<StateRef>() {
 }
 
 @JsonComponent
-class StateRefDeserializer: JsonDeserializer<StateRef>() {
+class StateRefDeserializer: JsonDeserializer<StateRef>(), Converter<String, StateRef> {
     companion object {
         fun parseString(str: String): StateRef {
             val parts = str.split('(', ')')
@@ -63,4 +65,11 @@ class StateRefDeserializer: JsonDeserializer<StateRef>() {
         val str = p.readValueAs(String::class.java)
         return parseString(str)
     }
+
+    // for Converting the PathVariable
+    override fun convert(str: String): StateRef? {
+        return parseString(str)
+    }
 }
+
+

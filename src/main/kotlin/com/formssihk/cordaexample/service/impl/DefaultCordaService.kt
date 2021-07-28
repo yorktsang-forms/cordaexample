@@ -2,8 +2,11 @@ package com.formssihk.cordaexample.service.impl
 
 import com.formssihk.cordaexample.service.CordaService
 import com.formssihk.cordaexample.utils.JarConverter
+import com.formssihk.sample.flow.CreateFlow
+import com.formssihk.sample.flow.ModifyFlow
 import net.corda.client.rpc.CordaRPCClient
 import net.corda.client.rpc.CordaRPCConnection
+import net.corda.core.concurrent.CordaFuture
 import net.corda.core.contracts.ContractState
 import net.corda.core.contracts.StateAndRef
 import net.corda.core.contracts.StateRef
@@ -13,11 +16,13 @@ import net.corda.core.identity.CordaX500Name
 import net.corda.core.identity.Party
 import net.corda.core.messaging.ClientRpcSslOptions
 import net.corda.core.messaging.CordaRPCOps
+import net.corda.core.messaging.startFlow
 import net.corda.core.node.NodeInfo
 import net.corda.core.node.services.Vault
 import net.corda.core.node.services.vault.DEFAULT_PAGE_NUM
 import net.corda.core.node.services.vault.PageSpecification
 import net.corda.core.node.services.vault.QueryCriteria
+import net.corda.core.transactions.SignedTransaction
 import net.corda.core.utilities.NetworkHostAndPort
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -26,6 +31,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.time.Instant
 import javax.annotation.PostConstruct
 import kotlin.reflect.KClass
 
@@ -167,5 +173,20 @@ class DefaultCordaService : CordaService{
     override fun downloadAttachment(hash: SecureHash, dest: OutputStream) {
         getOrCreateConnection()
         JarConverter.extractDocument(cordaRPCOps.openAttachment(hash), dest)
+    }
+
+    private fun runWorkflow(op: () -> CordaFuture<SignedTransaction>): SignedTransaction {
+        getOrCreateConnection()
+        val result = op().get()
+
+        return result
+    }
+
+    override fun createIOU(userPublicKey: String, creationTime: Instant, loanRecords: Map<String, Instant>) : SignedTransaction {
+        return runWorkflow { cordaRPCOps.startFlow(::CreateFlow, userPublicKey, creationTime, loanRecords).returnValue }
+    }
+
+    override fun modifyIOU(ref: StateRef, loanRecords: Map<String, Instant>) : SignedTransaction {
+        return runWorkflow { cordaRPCOps.startFlow(::ModifyFlow, ref, loanRecords).returnValue }
     }
 }

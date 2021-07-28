@@ -30,20 +30,14 @@ object IOUSchemaV1 : MappedSchema(
     @Entity
     @Table(name = "iou_states")
     class PersistentIOU(
-            @Column(name = "creator")
-            var creator: String,
-
-            @Column(name = "value")
-            var value: Int,
-
-            // @ElementCollection
-            // var listOfString: List<String>,
+            @Column(name = "user_public_key")
+            var userPublicKey: String,
 
             @Column(name = "linear_id")
             @Type(type = "uuid-char")
             var linearId: UUID
     ) : PersistentState() {
         // Default constructor required by hibernate.
-        constructor(): this("", 0, UUID.randomUUID())
+        constructor(): this("", UUID.randomUUID())
     }
 }

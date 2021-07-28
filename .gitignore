@@ -1,0 +1,6 @@
+/.gradle/
+/.idea/
+/build/
+/logs/
+/iou-cordapp/build/
+/iou-cordapp/logs/
