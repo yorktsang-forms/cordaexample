@@ -20,18 +20,9 @@ cd cordaexample
 
 ## Usage
 
-```python
-import foobar
+After started the Springboot server, HTTP request to the server shall operate the system.
 
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
+The API specification can be found at: localhost:20004/v2/api-docs
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
