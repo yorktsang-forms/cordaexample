@@ -183,7 +183,7 @@ class DefaultCordaService : CordaService{
     }
 
     override fun createIOU(userPublicKey: String, creationTime: Instant, loanRecords: Map<String, Instant>) : SignedTransaction {
-        return runWorkflow { cordaRPCOps.startFlow(::CreateFlow, userPublicKey, creationTime, loanRecords).returnValue }
+        return runWorkflow { cordaRPCOps.startFlow(::CreateFlow, userPublicKey, creationTime, emptyMap()).returnValue }
     }
 
     override fun modifyIOU(ref: StateRef, loanRecords: Map<String, Instant>) : SignedTransaction {
