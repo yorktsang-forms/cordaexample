@@ -3,7 +3,7 @@ package com.formssihk.sample.payload
 import java.security.MessageDigest
 import java.time.Instant
 
-data class Loan (
+data class Loan2 (
     val borrower: String,
     val lender: String,
     val principal: Double,

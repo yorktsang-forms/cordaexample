@@ -7,7 +7,7 @@ import net.corda.core.contracts.Requirements.using
 import net.corda.core.contracts.requireThat
 import net.corda.core.transactions.LedgerTransaction
 
-class IOUContract: Contract {
+class IOUContract2: Contract {
     companion object {
         @JvmStatic
         val ID = "io.cryptoblk.sample.contract.IOUContract"
