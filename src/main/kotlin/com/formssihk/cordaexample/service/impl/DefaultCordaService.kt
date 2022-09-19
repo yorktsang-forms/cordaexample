@@ -1,6 +1,7 @@
 package com.formssihk.cordaexample.service.impl
 
 import com.formssihk.cordaexample.service.CordaService
+import com.formssihk.cordaexample.service.CordaService1
 import com.formssihk.cordaexample.utils.JarConverter
 import com.formssihk.sample.flow.CreateFlow
 import com.formssihk.sample.flow.ModifyFlow
@@ -36,7 +37,7 @@ import javax.annotation.PostConstruct
 import kotlin.reflect.KClass
 
 @Service
-class DefaultCordaService : CordaService{
+class DefaultCordaService : CordaService1 {
     private val log = LoggerFactory.getLogger(DefaultCordaService::class.java)
 
     @Value("\${config.rpc.host:localhost}")
