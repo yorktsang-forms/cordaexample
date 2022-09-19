@@ -48,6 +48,11 @@ buildscript {
     }
 }
 
+plugins {
+    id("org.web3j") version "4.9.4"
+}
+
+
 allprojects { //Properties that you need to compile your project (The application)
     apply from: "${rootProject.projectDir}/repositories.gradle"
     apply plugin: 'kotlin'
@@ -79,12 +84,14 @@ allprojects { //Properties that you need to compile your project (The applicatio
 group 'com.formssihk'
 version '1.0-SNAPSHOT'
 
+
 apply plugin: "java"
 apply plugin: 'kotlin'
 apply plugin: 'net.corda.plugins.cordapp'
 apply plugin: 'net.corda.plugins.cordformation'
 apply plugin: 'net.corda.plugins.quasar-utils'
 apply plugin: 'org.springframework.boot'
+// apply plugin: 'org.web3j'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -109,6 +116,24 @@ dependencies {
     cordaCompile "org.slf4j:jul-to-slf4j:$slf4j_version"
 
     compile "io.springfox:springfox-swagger2:$springfox_version"
+
+    compile 'org.web3j:core:4.9.4'
+
+}
+
+web3j {
+    generatedPackageName = 'com.formsihk.cordaexample.nft.model'
+    generatedFilesBaseDir = "src/"
+}
+
+sourceSets {
+    main {
+        solidity {
+            srcDir {
+                "src/main/resources/templates"
+            }
+        }
+    }
 }
 
 springBoot {
