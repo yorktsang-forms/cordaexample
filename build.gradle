@@ -109,6 +109,9 @@ dependencies {
     cordaCompile "org.slf4j:jul-to-slf4j:$slf4j_version"
 
     compile "io.springfox:springfox-swagger2:$springfox_version"
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
 springBoot {

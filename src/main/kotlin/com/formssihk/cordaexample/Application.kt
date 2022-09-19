@@ -30,7 +30,7 @@ import java.time.Instant
 import java.util.*
 
 @SpringBootApplication
-open class Application {
+open class Application1 {
     companion object {
         @JvmStatic fun main(args: Array<String>) {
             runApplication<Application>(*args)
