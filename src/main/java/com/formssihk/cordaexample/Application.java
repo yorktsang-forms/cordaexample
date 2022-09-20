@@ -1,11 +1,11 @@
 package com.formssihk.cordaexample;
 
 import com.fasterxml.classmate.TypeResolver;
-import jdk.internal.util.xml.impl.Pair;
 import net.corda.core.contracts.ContractState;
 import net.corda.core.contracts.StateRef;
 import net.corda.core.contracts.TransactionState;
 import net.corda.core.crypto.SecureHash;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,6 +23,7 @@ import java.lang.reflect.Type;
 import java.time.Instant;
 import java.util.Collections;
 import springfox.documentation.service.Contact;
+
 
 @SpringBootApplication
 public class Application {

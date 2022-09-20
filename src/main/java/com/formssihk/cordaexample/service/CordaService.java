@@ -28,7 +28,7 @@ public interface CordaService {
     List<Party> parties();
     CordaRPCOps rpc();
 
-    <T extends ContractState> StateAndRef<T> getState(StateRef ref, Class<T> clazz);
+    <T extends ContractState> StateAndRef<T> getState(StateRef ref, Class<? extends T> clazz);
     <T extends ContractState> StateAndRef<T> getStateByLinearId(UniqueIdentifier linearId, Class<T> clazz);
 
     <T extends ContractState> List<StateAndRef<T>> getAllState(Class<T> clazz);

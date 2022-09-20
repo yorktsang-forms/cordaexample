@@ -10,7 +10,7 @@ import java.util.jar.JarInputStream
 import java.util.jar.JarOutputStream
 
 
-object JarConverter {
+object JarConverter1 {
 
     class TransferrableBAOStream(size: Int) : ByteArrayOutputStream(size) {
         fun stealBuf(): ByteArrayInputStream {
