@@ -16,7 +16,7 @@ import java.io.OutputStream
 import java.time.Instant
 import kotlin.reflect.KClass
 
-interface CordaService {
+interface CordaService1 {
     fun getOrCreateConnection()
     fun closeConnection()
     fun nodeInfo(): NodeInfo

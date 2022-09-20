@@ -1,7 +1,9 @@
 package com.formssihk.cordaexample.service.impl
 
-import com.formssihk.cordaexample.service.CordaService
+import com.formssihk.cordaexample.service.CordaService1
 import com.formssihk.cordaexample.utils.JarConverter
+import com.formssihk.cordaexample.utils.JarConverter.extractDocument
+import com.formssihk.cordaexample.utils.JarConverter1
 import com.formssihk.sample.flow.CreateFlow
 import com.formssihk.sample.flow.ModifyFlow
 import net.corda.client.rpc.CordaRPCClient
@@ -36,7 +38,7 @@ import javax.annotation.PostConstruct
 import kotlin.reflect.KClass
 
 @Service
-class DefaultCordaService : CordaService{
+class DefaultCordaService1 : CordaService1 {
     private val log = LoggerFactory.getLogger(DefaultCordaService::class.java)
 
     @Value("\${config.rpc.host:localhost}")
@@ -127,7 +129,13 @@ class DefaultCordaService : CordaService{
 
     override fun <T : ContractState> getState(ref: StateRef, clazz: KClass<T>): StateAndRef<T> {
         getOrCreateConnection()
-        return cordaRPCOps.vaultQueryByCriteria(QueryCriteria.VaultQueryCriteria(stateRefs = listOf(ref), status = Vault.StateStatus.ALL), clazz.java)
+        return cordaRPCOps
+                .vaultQueryByCriteria(
+                        QueryCriteria
+                                .VaultQueryCriteria(
+                                        stateRefs = listOf(ref),
+                                        status = Vault.StateStatus.ALL),
+                        clazz.java)
             .states.singleOrNull() ?: throw NoSuchElementException("ref=$ref")
     }
 
@@ -165,14 +173,14 @@ class DefaultCordaService : CordaService{
 
     override fun uploadAttachment(uploadedInputStream: InputStream): SecureHash {
         getOrCreateConnection()
-        return JarConverter.createJar(uploadedInputStream).use {
+        return JarConverter1.createJar(uploadedInputStream).use {
             cordaRPCOps.uploadAttachment(it)
         }
     }
 
     override fun downloadAttachment(hash: SecureHash, dest: OutputStream) {
         getOrCreateConnection()
-        JarConverter.extractDocument(cordaRPCOps.openAttachment(hash), dest)
+        JarConverter1.extractDocument(cordaRPCOps.openAttachment(hash), dest)
     }
 
     private fun runWorkflow(op: () -> CordaFuture<SignedTransaction>): SignedTransaction {
