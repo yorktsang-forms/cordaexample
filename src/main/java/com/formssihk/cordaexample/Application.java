@@ -1,7 +1,6 @@
 package com.formssihk.cordaexample;
 
 import com.fasterxml.classmate.TypeResolver;
-import jdk.internal.util.xml.impl.Pair;
 import net.corda.core.contracts.ContractState;
 import net.corda.core.contracts.StateRef;
 import net.corda.core.contracts.TransactionState;
@@ -52,7 +51,6 @@ public class Application {
                     //.directModelSubstitute(StateAndRef::class.java, StateAndRefJsonModel::class.java)
                     .directModelSubstitute(SecureHash.class, String.class)
                     .directModelSubstitute(Instant.class, Long.class)
-                    .ignoredParameterTypes(AbstractParty.class, Pair.class, ContractState.class, TransactionState.class)
                     .apiInfo(apiInfo());
         }
 

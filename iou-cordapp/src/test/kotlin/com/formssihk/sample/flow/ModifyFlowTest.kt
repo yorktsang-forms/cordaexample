@@ -36,7 +36,7 @@ class ModifyFlowTest {
         TestUtil.runFlow(tn, tn.partyA.startFlow(ModifyFlow(stateRef, mapOf("row2" to Instant.now()))))
         val resultB = tn.partyB.transaction { tn.partyB.services.vaultService.queryBy(IOUState::class.java, QueryCriteria.VaultQueryCriteria()).states }
         assertEquals( 1, resultB.size)
-        assertEquals(2, resultB.first().state.data.loadRecords.size)
+        assertEquals(2, resultB.first().state.data.loanRecords.size)
     }
 
     @Test
@@ -49,6 +49,6 @@ class ModifyFlowTest {
         TestUtil.runFlow(tn, tn.partyB.startFlow(ModifyFlow(stateRef, mapOf("row2" to Instant.now()))))
         val result2 = tn.partyA.transaction { tn.partyB.services.vaultService.queryBy(IOUState::class.java, QueryCriteria.VaultQueryCriteria()).states }
         assertEquals( 1, result2.size)
-        assertEquals(2, result2.first().state.data.loadRecords.size)
+        assertEquals(2, result2.first().state.data.loanRecords.size)
     }
 }
