@@ -48,6 +48,10 @@ buildscript {
     }
 }
 
+plugins {
+    id("org.web3j") version "4.9.4"
+}
+
 allprojects { //Properties that you need to compile your project (The application)
     apply from: "${rootProject.projectDir}/repositories.gradle"
     apply plugin: 'java'
@@ -113,7 +117,27 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    compile 'org.web3j:core:5.0.0'
+
 }
+
+
+web3j {
+    generatedPackageName = 'com.formsihk.cordaexample.nft.model'
+    generatedFilesBaseDir = "src/"
+}
+
+sourceSets {
+    main {
+        solidity {
+            srcDir {
+                "src/main/resources/templates"
+            }
+        }
+    }
+}
+
 
 springBoot {
     mainClassName = "com.formssihk.cordaexample.Application"
