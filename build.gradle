@@ -39,7 +39,7 @@ buildscript {
         maven { url 'https://software.r3.com/artifactory/corda-dependencies' }
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        //classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "net.corda.plugins:cordapp:$corda_gradle_plugins_version"
         classpath "net.corda.plugins:cordformation:$corda_gradle_plugins_version"
         classpath "net.corda.plugins:quasar-utils:$corda_gradle_plugins_version"
@@ -50,7 +50,7 @@ buildscript {
 
 allprojects { //Properties that you need to compile your project (The application)
     apply from: "${rootProject.projectDir}/repositories.gradle"
-    apply plugin: 'kotlin'
+    apply plugin: 'java'
 
     repositories {
         mavenLocal()
@@ -60,14 +60,14 @@ allprojects { //Properties that you need to compile your project (The applicatio
         maven { url 'https://jitpack.io' }
     }
 
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
-        kotlinOptions {
-            languageVersion = "1.2"
-            apiVersion = "1.2"
-            jvmTarget = "1.8"
-            javaParameters = true   // Useful for reflection.
-        }
-    }
+    //tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    //    kotlinOptions {
+    //        languageVersion = "1.2"
+    //        apiVersion = "1.2"
+    //        jvmTarget = "1.8"
+    //        javaParameters = true   // Useful for reflection.
+    //    }
+    //}
 
     jar {
         // This makes the JAR's SHA-256 hash repeatable.
@@ -80,7 +80,8 @@ group 'com.formssihk'
 version '1.0-SNAPSHOT'
 
 apply plugin: "java"
-apply plugin: 'kotlin'
+apply plugin: "java-library"
+//apply plugin: 'kotlin'
 apply plugin: 'net.corda.plugins.cordapp'
 apply plugin: 'net.corda.plugins.cordformation'
 apply plugin: 'net.corda.plugins.quasar-utils'
@@ -90,7 +91,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    //compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     // Corda dependencies.
     cordaCompile "net.corda:corda-core:$corda_core_release_version"
     cordaRuntime "net.corda:corda-node-api:$corda_release_version"
@@ -118,12 +119,12 @@ springBoot {
     mainClassName = "com.formssihk.cordaexample.Application"
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
+//compileKotlin {
+//    kotlinOptions.jvmTarget = "1.8"
+//}
+//compileTestKotlin {
+//    kotlinOptions.jvmTarget = "1.8"
+//}
 
 //Task to deploy the nodes in order to bootstrap a network
 task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
