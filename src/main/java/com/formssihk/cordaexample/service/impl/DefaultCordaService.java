@@ -155,6 +155,7 @@ public class DefaultCordaService implements CordaService {
 
     @Override
     public <T extends ContractState> StateAndRef<T> getState(StateRef ref, Class<T> clazz) {
+        // TODO: query criteria
 //        getOrCreateConnection();
 //
 //        CordaRPCOps cordaRPCOps = this.cordaRPCOps;
@@ -178,11 +179,15 @@ public class DefaultCordaService implements CordaService {
 
     @Override
     public <T extends ContractState> StateAndRef<T> getStateByLinearId(UniqueIdentifier linearId, Class<T> clazz) {
+        // TODO: query criteria
+
         return null;
     }
 
     @Override
     public <T extends ContractState> List<StateAndRef<T>> getAllState(Class<T> clazz) {
+        // TODO: query criteria
+
 //        getOrCreateConnection();
 //        Vault.Page<T> page = cordaRPCOps.vaultQueryByWithPagingSpec(
 //                clazz,
@@ -197,11 +202,15 @@ public class DefaultCordaService implements CordaService {
 
     @Override
     public <T extends ContractState> List<StateAndRef<T>> getAllStatesByLinearId(UniqueIdentifier linearId, Class<T> clazz) {
+        // TODO: query criteria
+
         return null;
     }
 
     @Override
     public <T extends ContractState> StateAndRef<T> getLatestStateByLinearId(UniqueIdentifier linearId, Class<T> clazz) {
+        // TODO: query criteria
+
         return null;
     }
 
