@@ -123,7 +123,7 @@ dependencies {
 
 
 web3j {
-    generatedPackageName = 'com.formsihk.cordaexample.nft.model'
+    generatedPackageName = 'com.formssihk.cordaexample.nft.model'
     generatedFilesBaseDir = "src/"
 }
 
@@ -142,7 +142,7 @@ springBoot {
     mainClassName = "com.formssihk.cordaexample.Application"
 }
 
-tasks.named("npmInstall").configure { enabled = false }
+// tasks.named("npmInstall").configure { enabled = false }
 
 //compileKotlin {
 //    kotlinOptions.jvmTarget = "1.8"

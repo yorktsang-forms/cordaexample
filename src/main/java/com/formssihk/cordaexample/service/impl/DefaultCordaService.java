@@ -154,7 +154,7 @@ public class DefaultCordaService implements CordaService {
     }
 
     @Override
-    public <T extends ContractState> StateAndRef<T> getState(StateRef ref, Class<? extends T> clazz) {
+    public <T extends ContractState> StateAndRef<T> getState(StateRef ref, Class<T> clazz) {
 //        getOrCreateConnection();
 //
 //        CordaRPCOps cordaRPCOps = this.cordaRPCOps;
